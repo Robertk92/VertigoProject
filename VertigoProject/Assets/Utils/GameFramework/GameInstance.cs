@@ -6,8 +6,12 @@ namespace Utils.GameFramework
 {
     public class GameInstance : MonoBehaviour
     {
-        protected virtual void Init()
+        /// <summary>
+        /// First Awake of the scene
+        /// </summary>
+        protected virtual void Awake()
         {
+            DontDestroyOnLoad(this);
         }
     }
 }
