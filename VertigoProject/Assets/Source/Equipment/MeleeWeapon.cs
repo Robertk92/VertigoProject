@@ -4,5 +4,11 @@ using UnityEngine;
 
 public class MeleeWeapon : Weapon
 {
+    public MeleeWeapon(GameObject modelPrefab) : base(modelPrefab)
+    {
+    }
 
+    public MeleeWeapon(MeleeWeapon other) : base(other)
+    {
+    }
 }

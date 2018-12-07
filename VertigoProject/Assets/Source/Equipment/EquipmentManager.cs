@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class EquipmentManager
 {
@@ -19,12 +20,12 @@ public class EquipmentManager
     /// </summary>
     public IEnumerable<Item> Inventory { get { return _inventory; } }
 
-    private readonly List<AttachmentSlot> _slots = new List<AttachmentSlot>();
+    private readonly List<AttachmentSlot> _slots;
 
     public EquipmentManager(List<AttachmentSlot> slots)
     {
         _slots = slots;
-
+        
         // Fill equipment dictionary so the keys exist
         foreach(AttachmentSlotId slot in Enum.GetValues(typeof(AttachmentSlotId)))
         {
@@ -37,8 +38,22 @@ public class EquipmentManager
         return _equippedObjects[slotId];
     }
 
-    public void Equip(AttachmentSlotId slotId, Item attachable)
+    public void AddToInventory(Item item)
     {
+        _inventory.Add(new Item(item));
+        ((RangedWeapon) _inventory.Last()).BaseDamage = 82.5f; //TODO: HACK
+    }
+
+    public void RemoveFromInventory(int index)
+    {
+        _inventory.RemoveAt(index);
+    }
+
+    public void Equip(AttachmentSlotId slotId, Item item)
+    {
+        if(!_inventory.Contains(item))
+        Debug.AssertFormat(_inventory.Contains(item), string.Format("Equip failed: item '{0}' not found in inventory"));
+        
         AttachmentSlot slot = _slots.FirstOrDefault(x => x.SlotId == slotId);
         Debug.AssertFormat(slot != null, string.Format("No slot found with slot id '{0}'", slotId));
 
@@ -47,6 +62,6 @@ public class EquipmentManager
             GameObject.Destroy(_equippedObjects[slotId]);
         }
 
-        _equippedObjects[slotId] = GameObject.Instantiate(attachable.ModelPrefab, slot.BoneTransform);
+        _equippedObjects[slotId] = GameObject.Instantiate(item.ModelPrefab, slot.BoneTransform);
     }
 }

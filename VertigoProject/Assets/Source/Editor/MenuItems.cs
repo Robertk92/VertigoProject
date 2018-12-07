@@ -11,27 +11,15 @@ public static class MenuItems
         ScriptableObjectUtility.CreateAsset<CharacterStateTransitionRules>();
     }
 
-    [MenuItem("Assets/Create/Equipment/Attachable")]
-    private static void CreateAttachable()
-    {
-        ScriptableObjectUtility.CreateAsset<Item>();
-    }
-
-    [MenuItem("Assets/Create/Equipment/Weapon/Melee Weapon")]
-    private static void CreateMeleeWeapon()
-    {
-        ScriptableObjectUtility.CreateAsset<MeleeWeapon>();
-    }
-
-    [MenuItem("Assets/Create/Equipment/Weapon/Ranged Weapon")]
+    [MenuItem("Assets/Create/Item/Ranged Weapon")]
     private static void CreateRangedWeapon()
     {
-        ScriptableObjectUtility.CreateAsset<RangedWeapon>();
+        ScriptableObjectUtility.CreateAsset<RangedWeaponScriptableObject>();
     }
 
-    [MenuItem("Assets/Create/Equipment/Weapon/Throwable")]
-    private static void CreateThrowable()
+    [MenuItem("Assets/Create/Data/Database")]
+    private static void CreateDatabase()
     {
-        ScriptableObjectUtility.CreateAsset<Throwable>();
+        ScriptableObjectUtility.CreateAsset<Database>();
     }
 }
