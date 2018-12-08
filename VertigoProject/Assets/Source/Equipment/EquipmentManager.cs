@@ -22,6 +22,8 @@ public class EquipmentManager
 
     private readonly List<AttachmentSlot> _slots;
 
+    public event Action<Item> OnEquipped = delegate { };
+
     public EquipmentManager(List<AttachmentSlot> slots)
     {
         _slots = slots;
@@ -40,8 +42,7 @@ public class EquipmentManager
 
     public void AddToInventory(Item item)
     {
-        _inventory.Add(new Item(item));
-        ((RangedWeapon) _inventory.Last()).BaseDamage = 82.5f; //TODO: HACK
+        _inventory.Add(item);
     }
 
     public void RemoveFromInventory(int index)
@@ -49,19 +50,30 @@ public class EquipmentManager
         _inventory.RemoveAt(index);
     }
 
-    public void Equip(AttachmentSlotId slotId, Item item)
+    public void Equip(AttachmentSlotId slotId, int inventoryIndex)
     {
-        if(!_inventory.Contains(item))
-        Debug.AssertFormat(_inventory.Contains(item), string.Format("Equip failed: item '{0}' not found in inventory"));
-        
+        Debug.AssertFormat(inventoryIndex < _inventory.Count && inventoryIndex >= 0, 
+            string.Format("Equip failed: inventory index '{0}' is outside the bounds of the inventory", inventoryIndex));
+
+        Item item = _inventory[inventoryIndex];
         AttachmentSlot slot = _slots.FirstOrDefault(x => x.SlotId == slotId);
         Debug.AssertFormat(slot != null, string.Format("No slot found with slot id '{0}'", slotId));
 
         if(_equippedObjects[slotId] != null)
         {
-            GameObject.Destroy(_equippedObjects[slotId]);
+            GameObject.Destroy(_equippedObjects[slotId].gameObject);
         }
+        
+        GameObject spawnedItem = GameObject.Instantiate(item.Prefab);
+        _equippedObjects[slotId] = spawnedItem;
+        spawnedItem.transform.SetPositionAndRotation(
+            slot.BoneTransform.position,
+            slot.BoneTransform.rotation);
+        spawnedItem.transform.SetParent(slot.BoneTransform);
 
-        _equippedObjects[slotId] = GameObject.Instantiate(item.ModelPrefab, slot.BoneTransform);
+        
+        spawnedItem.transform.localPosition = item.AttachmentPositionOffset;
+        spawnedItem.transform.localRotation = Quaternion.Euler(item.AttachmentRotationOffset);
+        OnEquipped.Invoke(item);
     }
 }

@@ -10,6 +10,9 @@ public class Character : MonoBehaviour
     [SerializeField]
     private List<AttachmentSlot> _attachmentSlots;
 
+    [SerializeField, Tooltip("Default items to add to the character's inventory")]
+    private List<Item> _defaultItems = new List<Item>();
+
     public CharacterState ActiveState { get; private set; }
     public EquipmentManager EquipmentManager { get; private set; }
     
@@ -22,6 +25,24 @@ public class Character : MonoBehaviour
         Debug.AssertFormat(_stateTransitionRules, "No character state transition rules found");
 
         EquipmentManager = new EquipmentManager(_attachmentSlots);
+        EquipmentManager.OnEquipped += OnEquippedHandler;
+        foreach (Item item in _defaultItems)
+        {
+            EquipmentManager.AddToInventory(item);
+        }
+    }
+
+    private void OnEquippedHandler(Item item)
+    {
+        if(item is RangedWeaponStats)
+        {
+            TryActivateState(CharacterState.Aim);
+        }
+    }
+
+    protected virtual void Update()
+    {
+
     }
 
     /// <summary>
@@ -34,6 +55,7 @@ public class Character : MonoBehaviour
         if(CanTransitionTo(state))
         {
             ActiveState = state;
+            _animator.SetInteger("State", (int)state);
             return true;
         }
         return false;
