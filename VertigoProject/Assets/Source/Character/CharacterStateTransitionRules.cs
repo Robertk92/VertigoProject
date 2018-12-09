@@ -5,10 +5,11 @@ using UnityEngine;
 [Serializable]
 public class CharacterStateTransitionRule
 {
-    public CharacterState state;
-    public List<CharacterState> allowedStates;
+    public StateId state;
+    public List<StateId> allowedStates;
 }
 
+[CreateAssetMenu]
 public class CharacterStateTransitionRules : ScriptableObject
 {
     [Tooltip("The rules that determine if a state can transition to another state, unlisted states can always transition to any other state")]

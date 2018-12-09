@@ -25,24 +25,19 @@ public class Player : Character
         
     }
 
-    public void OnInputAction(string actionName)
+    public void OnInputActionPressed(string actionName)
     {
-        if(actionName == PlayerInputKeys.ActionEquip1)
-        {
-            EquipmentManager.Equip(AttachmentSlotId.RightHand, 0);
-        }
-        else if(actionName == PlayerInputKeys.ActionEquip2)
-        {
-            EquipmentManager.Equip(AttachmentSlotId.RightHand, 1);
-        }
-        else if(actionName == PlayerInputKeys.ActionEquip3)
-        {
-            EquipmentManager.Equip(AttachmentSlotId.RightHand, 2);
-        }
-        else if(actionName == PlayerInputKeys.ActionEquip4)
-        {
-            EquipmentManager.Equip(AttachmentSlotId.RightHand, 3);
-        }
+        StateMachine.ActiveState.OnInputActionPressed(actionName);
+    }
+
+    public void OnInputActionHold(string actionName)
+    {
+        StateMachine.ActiveState.OnInputActionHold(actionName);
+    }
+
+    private void OnGUI()
+    {
+        GUILayout.Label(StateMachine.ActiveStateId.ToString());
     }
 
     private void OnTriggerEnter(Collider collider)

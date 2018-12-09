@@ -820,7 +820,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1592469475102048}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.6154104, y: 6.093328e-17, z: -2.744191}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4424075219514764}
@@ -1319,19 +1319,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae12f33a4671a0408d1a87e0e681998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stateTransitionRules: {fileID: 11400000, guid: c5309fa226225e249b2a4ce8a4d09a22,
-    type: 2}
+  _context: {fileID: 11400000, guid: d4414f7edf1350f429ab4a66e08ed3e1, type: 2}
   _attachmentSlots:
+  - _slotId: 0
+    _boneTransform: {fileID: 4242813760047300}
   - _slotId: 1
     _boneTransform: {fileID: 4143190629964564}
   - _slotId: 2
     _boneTransform: {fileID: 4579227556444394}
-  - _slotId: 0
-    _boneTransform: {fileID: 4242813760047300}
   - _slotId: 3
     _boneTransform: {fileID: 4549108217127026}
   _defaultItems:
-  - {fileID: 11400000, guid: 4cdf7681a40b73d4e8c05f6a5f2f0c57, type: 2}
+  - item: {fileID: 11400000, guid: 4cdf7681a40b73d4e8c05f6a5f2f0c57, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: 432f36e8de7112241b73e68f42b8f581, type: 2}
+    count: 3
+  - item: {fileID: 11400000, guid: 0d1f1a9b05691a740901e2009d6c7f6f, type: 2}
+    count: 1
 --- !u!137 &137112035425399628
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

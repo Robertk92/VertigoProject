@@ -18,24 +18,14 @@ public class PlayerInputController : MonoBehaviour
             return;
         }
         
-        if(Input.GetButtonDown(PlayerInputKeys.ActionEquip1))
-        {
-            _possessedPlayer.OnInputAction(PlayerInputKeys.ActionEquip1);
-        }
+        if (Input.GetButtonDown(PlayerInputKeys.ActionEquip1))  { _possessedPlayer.OnInputActionPressed(PlayerInputKeys.ActionEquip1); }
+        if (Input.GetButtonDown(PlayerInputKeys.ActionEquip2))  { _possessedPlayer.OnInputActionPressed(PlayerInputKeys.ActionEquip2); }
+        if (Input.GetButtonDown(PlayerInputKeys.ActionEquip3))  { _possessedPlayer.OnInputActionPressed(PlayerInputKeys.ActionEquip3); }
+        if (Input.GetButtonDown(PlayerInputKeys.ActionEquip4))  { _possessedPlayer.OnInputActionPressed(PlayerInputKeys.ActionEquip4); }
+        if (Input.GetButtonDown(PlayerInputKeys.ActionUseItem)) { _possessedPlayer.OnInputActionPressed(PlayerInputKeys.ActionUseItem); }
+        if (Input.GetButtonDown(PlayerInputKeys.ActionShoot))   { _possessedPlayer.OnInputActionPressed(PlayerInputKeys.ActionShoot); }
+        if (Input.GetButtonDown(PlayerInputKeys.ActionToggleFiringMode)) { _possessedPlayer.OnInputActionPressed(PlayerInputKeys.ActionToggleFiringMode); }
 
-        if (Input.GetButtonDown(PlayerInputKeys.ActionEquip2))
-        {
-            _possessedPlayer.OnInputAction(PlayerInputKeys.ActionEquip2);
-        }
-        
-        if (Input.GetButtonDown(PlayerInputKeys.ActionEquip3))
-        {
-            _possessedPlayer.OnInputAction(PlayerInputKeys.ActionEquip3);
-        }
-
-        if (Input.GetButtonDown(PlayerInputKeys.ActionEquip4))
-        {
-            _possessedPlayer.OnInputAction(PlayerInputKeys.ActionEquip4);
-        }
+        if (Input.GetButton(PlayerInputKeys.ActionShoot)) { _possessedPlayer.OnInputActionHold(PlayerInputKeys.ActionShoot); }
     }
 }

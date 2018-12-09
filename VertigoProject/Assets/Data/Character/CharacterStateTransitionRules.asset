@@ -17,6 +17,8 @@ MonoBehaviour:
   - state: 1
     allowedStates: 0000000002000000
   - state: 2
-    allowedStates: 00000000
+    allowedStates: 000000000400000001000000
   - state: 3
     allowedStates: 00000000
+  - state: 4
+    allowedStates: 01000000

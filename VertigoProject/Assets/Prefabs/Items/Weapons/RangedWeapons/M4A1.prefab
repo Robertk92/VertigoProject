@@ -11,6 +11,21 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1286589731502654}
   m_IsPrefabAsset: 1
+--- !u!1 &1106647665097760
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4182536548561614}
+  m_Layer: 0
+  m_Name: AmmoClipParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1286589731502654
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,6 +103,19 @@ Transform:
   m_Father: {fileID: 4788173449316528}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4182536548561614
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1106647665097760}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: 0.005, y: -0.075, z: 0.014}
+  m_LocalScale: {x: 1.2195122, y: 1.2195122, z: 1.2195122}
+  m_Children: []
+  m_Father: {fileID: 4788173449316528}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4339693856670750
 Transform:
   m_ObjectHideFlags: 1
@@ -95,7 +123,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1286589731502654}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.1287096, y: 0.388, z: 4.815349}
+  m_LocalPosition: {x: 0, y: 0.29, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4788173449316528}
@@ -127,6 +155,7 @@ Transform:
   m_Children:
   - {fileID: 4115270598218358}
   - {fileID: 4646503115120062}
+  - {fileID: 4182536548561614}
   m_Father: {fileID: 4339693856670750}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -201,6 +230,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b30d970f2c93d924a877ae00b8af1ff0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stats: {fileID: 11400000, guid: 4cdf7681a40b73d4e8c05f6a5f2f0c57, type: 2}
-  _ammoClip: {fileID: 0}
+  _context: {fileID: 11400000, guid: 4cdf7681a40b73d4e8c05f6a5f2f0c57, type: 2}
   _projectileSpawn: {fileID: 4646503115120062}
+  _ammoClipParent: {fileID: 4182536548561614}

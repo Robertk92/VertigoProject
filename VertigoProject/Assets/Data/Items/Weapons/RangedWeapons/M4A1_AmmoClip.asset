@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d75b7d7698995534dac148140d2e63c3, type: 3}
+  m_Name: M4A1_AmmoClip
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 114706516655794964, guid: 3770142c139f07042ac19d2fd8d26193, type: 2}
+  _attachmentPositionOffset: {x: 0, y: 0.00036, z: 0.0004}
+  _attachmentRotationOffset: {x: 63.285, y: 113.174, z: 24.278}
+  _projectilePrefab: {fileID: 1938726550336460, guid: eefe81cbed0d78b429834a7697ff002e,
+    type: 2}
+  _maxNumProjectiles: 7

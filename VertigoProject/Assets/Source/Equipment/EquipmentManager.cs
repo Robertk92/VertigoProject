@@ -7,73 +7,123 @@ using UnityEngine.Assertions;
 
 public class EquipmentManager
 {
-    private readonly Dictionary<AttachmentSlotId, GameObject> _equippedObjects = new Dictionary<AttachmentSlotId, GameObject>();
+    private readonly Dictionary<AttachmentSlotId, Item> _equippedItems = new Dictionary<AttachmentSlotId, Item>();
     /// <summary>
     /// The spawned game objects of the items that are currently equipped
     /// </summary>
-    public IEnumerable<KeyValuePair<AttachmentSlotId, GameObject>> EquippedObjects { get { return _equippedObjects; } }
+    public IEnumerable<KeyValuePair<AttachmentSlotId, Item>> EquippedItems { get { return _equippedItems; } }
 
-    private readonly List<Item> _inventory = new List<Item>();
+    private readonly List<ItemContext> _inventory = new List<ItemContext>();
 
     /// <summary>
     /// The items that is being carried (not the actual game object)
     /// </summary>
-    public IEnumerable<Item> Inventory { get { return _inventory; } }
+    public IEnumerable<ItemContext> Inventory { get { return _inventory; } }
 
     private readonly List<AttachmentSlot> _slots;
+    private readonly Dictionary<AttachmentSlotId, bool> _slotLocks;
 
-    public event Action<Item> OnEquipped = delegate { };
-
+    public event Action<ItemContext> OnEquipped = delegate { };
+    
     public EquipmentManager(List<AttachmentSlot> slots)
     {
         _slots = slots;
+        _slotLocks = new Dictionary<AttachmentSlotId, bool>();
         
-        // Fill equipment dictionary so the keys exist
+        // Fill dictionaries so the keys exist
         foreach(AttachmentSlotId slot in Enum.GetValues(typeof(AttachmentSlotId)))
         {
-            _equippedObjects.Add(slot, null);
+            _equippedItems.Add(slot, null);
+            _slotLocks.Add(slot, false);
         }
     }
 
-    public GameObject GetEquipmentInSlot(AttachmentSlotId slotId)
+    public void LockSlot(AttachmentSlotId slotId)
     {
-        return _equippedObjects[slotId];
+        _slotLocks[slotId] = true;
     }
 
-    public void AddToInventory(Item item)
+    public void UnlockSlot(AttachmentSlotId slotId)
+    {
+        _slotLocks[slotId] = false;
+    }
+
+    public Item GetEquipmentInSlot(AttachmentSlotId slotId)
+    {
+        return _equippedItems[slotId];
+    }
+
+    public void AddToInventory(ItemContext item)
     {
         _inventory.Add(item);
     }
 
-    public void RemoveFromInventory(int index)
+    public void RemoveFromInventory(ItemContext item)
     {
-        _inventory.RemoveAt(index);
+        _inventory.Remove(item);
     }
 
-    public void Equip(AttachmentSlotId slotId, int inventoryIndex)
+    public T GetInventoryItemByType<T>() where T : ItemContext
     {
-        Debug.AssertFormat(inventoryIndex < _inventory.Count && inventoryIndex >= 0, 
-            string.Format("Equip failed: inventory index '{0}' is outside the bounds of the inventory", inventoryIndex));
+        foreach (ItemContext item in Inventory)
+        {
+            if(item.GetType() == typeof(T))
+            {
+                return (T)item;
+            }
+        }
+        return null;
+    }
 
-        Item item = _inventory[inventoryIndex];
+    public ItemContext GetInventoryItemByName(string name)
+    {
+        foreach (ItemContext item in _inventory)
+        {
+            if(item.name == name)
+            {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public Item Equip(AttachmentSlotId slotId, ItemContext item)
+    {
+        if (_slotLocks[slotId])
+        {
+            return null;
+        }
+
+        if(!Inventory.Contains(item))
+        {
+            return null;
+        }
+        
+        AttachableContext attachable = (AttachableContext)item;
+        Debug.AssertFormat(attachable, string.Format("Failed to equip: item '{0}' is not attachable", item.name));
+        
         AttachmentSlot slot = _slots.FirstOrDefault(x => x.SlotId == slotId);
         Debug.AssertFormat(slot != null, string.Format("No slot found with slot id '{0}'", slotId));
 
-        if(_equippedObjects[slotId] != null)
+        if(_equippedItems[slotId] != null)
         {
-            GameObject.Destroy(_equippedObjects[slotId].gameObject);
+            AddToInventory(_equippedItems[slotId].GetItemContext());
+            GameObject.Destroy(_equippedItems[slotId].gameObject);
         }
         
-        GameObject spawnedItem = GameObject.Instantiate(item.Prefab);
-        _equippedObjects[slotId] = spawnedItem;
+        Item spawnedItem = GameObject.Instantiate(item.Prefab);
+        _equippedItems[slotId] = spawnedItem;
+
         spawnedItem.transform.SetPositionAndRotation(
             slot.BoneTransform.position,
             slot.BoneTransform.rotation);
         spawnedItem.transform.SetParent(slot.BoneTransform);
+        spawnedItem.transform.localPosition = attachable.AttachmentPositionOffset;
+        spawnedItem.transform.localRotation = Quaternion.Euler(attachable.AttachmentRotationOffset);
 
-        
-        spawnedItem.transform.localPosition = item.AttachmentPositionOffset;
-        spawnedItem.transform.localRotation = Quaternion.Euler(item.AttachmentRotationOffset);
+        RemoveFromInventory(item);
+
         OnEquipped.Invoke(item);
+        return spawnedItem;
     }
 }
