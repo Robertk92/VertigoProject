@@ -25,6 +25,7 @@ public class PlayerInputController : MonoBehaviour
         if (Input.GetButtonDown(PlayerInputKeys.ActionUseItem)) { _possessedPlayer.OnInputActionPressed(PlayerInputKeys.ActionUseItem); }
         if (Input.GetButtonDown(PlayerInputKeys.ActionShoot))   { _possessedPlayer.OnInputActionPressed(PlayerInputKeys.ActionShoot); }
         if (Input.GetButtonDown(PlayerInputKeys.ActionToggleFiringMode)) { _possessedPlayer.OnInputActionPressed(PlayerInputKeys.ActionToggleFiringMode); }
+        if (Input.GetButtonDown(PlayerInputKeys.ActionThrow)) { _possessedPlayer.OnInputActionPressed(PlayerInputKeys.ActionThrow); }
 
         if (Input.GetButton(PlayerInputKeys.ActionShoot)) { _possessedPlayer.OnInputActionHold(PlayerInputKeys.ActionShoot); }
     }

@@ -548,6 +548,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4424075219514764}
   - component: {fileID: 95286686090619342}
+  - component: {fileID: 114725458839529660}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -820,7 +821,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1592469475102048}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6154104, y: 6.093328e-17, z: -2.744191}
+  m_LocalPosition: {x: -0.15281044, y: 8.5185884e-20, z: -0.003836431}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4424075219514764}
@@ -1330,12 +1331,25 @@ MonoBehaviour:
   - _slotId: 3
     _boneTransform: {fileID: 4549108217127026}
   _defaultItems:
-  - item: {fileID: 11400000, guid: 4cdf7681a40b73d4e8c05f6a5f2f0c57, type: 2}
+  - context: {fileID: 11400000, guid: 4cdf7681a40b73d4e8c05f6a5f2f0c57, type: 2}
     count: 1
-  - item: {fileID: 11400000, guid: 432f36e8de7112241b73e68f42b8f581, type: 2}
+  - context: {fileID: 11400000, guid: 432f36e8de7112241b73e68f42b8f581, type: 2}
     count: 3
-  - item: {fileID: 11400000, guid: 0d1f1a9b05691a740901e2009d6c7f6f, type: 2}
+  - context: {fileID: 11400000, guid: 0d1f1a9b05691a740901e2009d6c7f6f, type: 2}
     count: 1
+  - context: {fileID: 11400000, guid: d14b89e7478c85e449f65e99897abd21, type: 2}
+    count: 1
+--- !u!114 &114725458839529660
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1829067723967496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b09af6e1ac000e94cbde9a10dfc50540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!137 &137112035425399628
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

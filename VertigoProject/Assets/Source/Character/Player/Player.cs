@@ -35,14 +35,19 @@ public class Player : Character
         StateMachine.ActiveState.OnInputActionHold(actionName);
     }
 
+    // For debug purposes
     private void OnGUI()
     {
-        GUILayout.Label(StateMachine.ActiveStateId.ToString());
-    }
+        GUI.contentColor = Color.black;
+        GUILayout.Label("=====================");
+        GUILayout.Label("======Inventory======");
+        GUILayout.Label("=====================");
+        foreach (InventoryItem inventoryItem in EquipmentManager.Inventory)
+        {
+            GUILayout.Label(inventoryItem.context.name);
+        }
+        GUILayout.Label("=====================");
 
-    private void OnTriggerEnter(Collider collider)
-    {
-        
+        GUILayout.Label(string.Format("ActiveState: {0}", StateMachine.ActiveStateId));
     }
-    
 }

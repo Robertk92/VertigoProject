@@ -1,6 +1,6 @@
 ﻿[System.Serializable]
 public struct ItemCountPair
 {
-    public ItemContext item;
+    public ItemContext context;
     public int count;
 }

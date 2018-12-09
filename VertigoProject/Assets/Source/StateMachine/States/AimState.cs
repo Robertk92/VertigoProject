@@ -24,7 +24,7 @@ public class AimState : State
         base.OnInputActionHold(action);
 
         // Shoot in automatic firing mode
-        if(_rangedWeapon.FireMode == RangedWeapon.FiringMode.Automatic)
+        if(_rangedWeapon.StateInfo.FireMode == RangedWeaponFireMode.Automatic)
         {
             if (action == PlayerInputKeys.ActionShoot && _canShoot)
             {
@@ -39,7 +39,7 @@ public class AimState : State
         base.OnInputActionPressed(action);
 
         // Shoot in single firing mode 
-        if (_rangedWeapon.FireMode == RangedWeapon.FiringMode.Single)
+        if (_rangedWeapon.StateInfo.FireMode == RangedWeaponFireMode.Single)
         {
             if (action == PlayerInputKeys.ActionShoot && _canShoot)
             {
@@ -51,13 +51,13 @@ public class AimState : State
         // Single/Automatic firing mode toggle
         if (action == PlayerInputKeys.ActionToggleFiringMode)
         {
-            if (_rangedWeapon.FireMode == RangedWeapon.FiringMode.Single)
+            if (_rangedWeapon.StateInfo.FireMode == RangedWeaponFireMode.Single)
             {
-                _rangedWeapon.FireMode = RangedWeapon.FiringMode.Automatic;
+                _rangedWeapon.StateInfo.FireMode = RangedWeaponFireMode.Automatic;
             }
             else
             {
-                _rangedWeapon.FireMode = RangedWeapon.FiringMode.Single;
+                _rangedWeapon.StateInfo.FireMode = RangedWeaponFireMode.Single;
             }
         }
     }

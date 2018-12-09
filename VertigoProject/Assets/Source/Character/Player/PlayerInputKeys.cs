@@ -8,4 +8,5 @@ public static class PlayerInputKeys
     public const string ActionUseItem = "UseItem";
     public const string ActionShoot = "Shoot";
     public const string ActionToggleFiringMode = "ToggleFiringMode";
+    public const string ActionThrow = "Throw";
 }

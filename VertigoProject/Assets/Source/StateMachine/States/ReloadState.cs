@@ -14,25 +14,26 @@ public class ReloadState : State
         _rangedWeapon = (RangedWeapon)Character.EquipmentManager.GetEquipmentInSlot(AttachmentSlotId.RightHand);
         if(_rangedWeapon == null)
         {
-            StateMachine.TryActivateState(StateId.Idle);
+            StateMachine.TryActivateState(StateId.Aim);
             return;
         }
 
-        AmmoClipContext nextAmmoClip = GetNextClipFromInventory();
-        if(_rangedWeapon.AmmoClip == null && nextAmmoClip == null)
+        InventoryItem nextAmmoClipInventoryItem = GetNextClipFromInventory();
+        if(nextAmmoClipInventoryItem == null)
         {
-            StateMachine.TryActivateState(StateId.Idle);
+            StateMachine.TryActivateState(StateId.Aim);
             return;
         }
 
-        if (_rangedWeapon.AmmoClip != null)
+        if (_rangedWeapon.StateInfo.AmmoClipStateInfo != null)
         {
-            if (_rangedWeapon.AmmoClip.ProjectileCount == 0 && nextAmmoClip == null)
+            if (_rangedWeapon.StateInfo.AmmoClipStateInfo.ProjectileCount == 0 && nextAmmoClipInventoryItem == null)
             {
-                StateMachine.TryActivateState(StateId.Idle);
+                StateMachine.TryActivateState(StateId.Aim);
                 return;
             }
         }
+
 
         Character.Animator.SetInteger("State", (int)Id);
         float reloadTime = Character.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
@@ -45,37 +46,37 @@ public class ReloadState : State
         Character.EquipmentManager.UnlockSlot(AttachmentSlotId.RightHand);
     }
 
-    private AmmoClipContext GetNextClipFromInventory()
+    private InventoryItem GetNextClipFromInventory()
     {
-        AmmoClipContext ammoClipContext = null;
-        foreach (ItemContext itemContext in Character.EquipmentManager.Inventory)
+        InventoryItem ammoClipInventoryItem = null;
+        foreach (InventoryItem inventoryItem in Character.EquipmentManager.Inventory)
         {
-            if (_rangedWeapon.Context.AmmoClipContext == itemContext)
+            if (_rangedWeapon.Context.AmmoClipContext == inventoryItem.context)
             {
-                ammoClipContext = (AmmoClipContext)itemContext;
+                ammoClipInventoryItem = inventoryItem;
                 break;
             }
         }
-        return ammoClipContext;
+        return ammoClipInventoryItem;
     }
 
     private IEnumerator Reload(float time)
     {
-        AmmoClipContext ammoClipContext = GetNextClipFromInventory();    
+        InventoryItem ammoClipInventoryItem = GetNextClipFromInventory();    
         
-        if(ammoClipContext == null)
+        if(_rangedWeapon.AmmoClip != null)
         {
-            // No ammo clips in inventory, no need to continue reloading
-            StateMachine.TryActivateState(StateId.Aim);
+            GameObject.Destroy(_rangedWeapon.AmmoClip.gameObject);
+            _rangedWeapon.AmmoClip = null;
         }
-        
-        AmmoClip spawnedAmmoClip = (AmmoClip)Character.EquipmentManager.Equip(AttachmentSlotId.LeftHand, ammoClipContext);
+
+        AmmoClip spawnedAmmoClip = (AmmoClip)Character.EquipmentManager.Equip(AttachmentSlotId.LeftHand, ammoClipInventoryItem);
         
         yield return new WaitForSeconds(time);
         spawnedAmmoClip.transform.SetParent(_rangedWeapon.AmmoClipParent);
         spawnedAmmoClip.transform.localPosition = Vector3.zero;
         spawnedAmmoClip.transform.localRotation = Quaternion.identity;
-        _rangedWeapon.AmmoClip = spawnedAmmoClip;
+        _rangedWeapon.StateInfo.AmmoClipStateInfo = spawnedAmmoClip.StateInfo;
 
         StateMachine.TryActivateState(StateId.Aim);
     }

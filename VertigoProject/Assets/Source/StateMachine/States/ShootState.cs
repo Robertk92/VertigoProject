@@ -9,13 +9,29 @@ public class ShootState : State
     public override void Activate()
     {
         base.Activate();
-        Character.EquipmentManager.LockSlot(AttachmentSlotId.RightHand);
-        Character.Animator.SetInteger("State", (int)Id);
+
         _rangedWeapon = (RangedWeapon)Character.EquipmentManager.GetEquipmentInSlot(AttachmentSlotId.RightHand);
-        if(_rangedWeapon == null)
+        if (_rangedWeapon == null)
         {
             StateMachine.TryActivateState(StateId.Idle);
         }
+
+        if (_rangedWeapon.StateInfo.AmmoClipStateInfo == null)
+        {
+            StateMachine.TryActivateState(StateId.Reload);
+            Debug.Log("No clip");
+            return;
+        }
+        else if (_rangedWeapon.StateInfo.AmmoClipStateInfo.ProjectileCount == 0)
+        {
+            StateMachine.TryActivateState(StateId.Reload);
+            Debug.Log("No ammo");
+            return;
+        }
+
+        Character.EquipmentManager.LockSlot(AttachmentSlotId.RightHand);
+        Character.Animator.SetInteger("State", (int)Id);
+        
         Shoot();
     }
 
@@ -27,28 +43,15 @@ public class ShootState : State
 
     private void Shoot()
     {
-        if (_rangedWeapon.AmmoClip == null)
-        {
-            StateMachine.TryActivateState(StateId.Reload);
-            Debug.Log("No clip");
-            return;
-        }
-        else if (_rangedWeapon.AmmoClip.ProjectileCount == 0)
-        {
-            StateMachine.TryActivateState(StateId.Reload);
-            Debug.Log("No ammo");
-            return;
-        }
-
-        GameObject projectile = GameObject.Instantiate(_rangedWeapon.AmmoClip.Context.ProjectilePrefab);
+        GameObject projectile = GameObject.Instantiate(_rangedWeapon.Context.AmmoClipContext.ProjectilePrefab);
         projectile.transform.position = _rangedWeapon.ProjectileSpawn.transform.position;
         projectile.transform.rotation = _rangedWeapon.ProjectileSpawn.transform.rotation;
-        _rangedWeapon.AmmoClip.ProjectileCount--;
+        _rangedWeapon.StateInfo.AmmoClipStateInfo.ProjectileCount--;
         
         Rigidbody rigidbody = projectile.GetComponent<Rigidbody>();
         rigidbody.AddForce(projectile.transform.forward * 1000.0f);
 
-        if (_rangedWeapon.AmmoClip.ProjectileCount == 0)
+        if (_rangedWeapon.StateInfo.AmmoClipStateInfo.ProjectileCount == 0)
         {
             StateMachine.TryActivateState(StateId.Reload);
         }

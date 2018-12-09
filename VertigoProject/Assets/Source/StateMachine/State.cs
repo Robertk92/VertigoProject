@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public struct MultiStateOptions
+public class MultiStateOptions
 {
     public bool canEquipItems;
 }
@@ -59,7 +59,9 @@ public abstract class State
             }
             else if (action == PlayerInputKeys.ActionEquip3)
             {
-                
+                Character.EquipmentManager.Equip(
+                    AttachmentSlotId.RightHand,
+                    Character.EquipmentManager.GetInventoryItemByName("Rock"));
             }
             else if (action == PlayerInputKeys.ActionEquip4)
             {

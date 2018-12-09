@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 public class Character : MonoBehaviour
 {
@@ -20,12 +21,15 @@ public class Character : MonoBehaviour
     public EquipmentManager EquipmentManager { get; private set; }
     public StateMachine StateMachine { get; private set; }
     public Animator Animator { get; private set; }
-    
+    public AnimationEventHandler AnimationEventHandler { get; private set; }
+
     protected virtual void Awake()
     {
         Animator = GetComponentInChildren<Animator>();
         Debug.AssertFormat(Animator, "Animator not found in Character's children");
         Debug.AssertFormat(Context.StateTransitionRules, "No character state transition rules found");
+
+        AnimationEventHandler = Animator.gameObject.GetComponent<AnimationEventHandler>();
 
         // Create state machine and register all states
         StateMachine = new StateMachine(this, StateId.Idle);
@@ -33,7 +37,8 @@ public class Character : MonoBehaviour
         StateMachine.RegisterState<AimState>(StateId.Aim);
         StateMachine.RegisterState<ReloadState>(StateId.Reload);
         StateMachine.RegisterState<ShootState>(StateId.Shoot);
-        
+        StateMachine.RegisterState<ThrowState>(StateId.Throw);
+
         EquipmentManager = new EquipmentManager(AttachmentSlots);
         EquipmentManager.OnEquipped += OnEquippedHandler;
 
@@ -41,7 +46,7 @@ public class Character : MonoBehaviour
         {
             for (int i = 0; i < itemCountPair.count; i++)
             {
-                EquipmentManager.AddToInventory(itemCountPair.item);
+                EquipmentManager.AddToInventory(new InventoryItem(itemCountPair.context, null));
             }
         }
     }
@@ -62,4 +67,6 @@ public class Character : MonoBehaviour
     {
         
     }
+
+    
 }
