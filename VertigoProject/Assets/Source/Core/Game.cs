@@ -1,7 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 
+/**
+ * Game singleton (configured to be the first Awake call)
+ */
 public class Game : MonoBehaviour
 {
     public static Game Instance { get; private set; }

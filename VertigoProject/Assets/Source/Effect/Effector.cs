@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * The Effector basically applies effects when something happens (in my case I only implemeted OnCollisionEnter)
+ */
 public class Effector : MonoBehaviour
 {
     [SerializeField]

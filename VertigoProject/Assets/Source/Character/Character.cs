@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
-using System.Linq;
 using System.Collections.Generic;
-using System;
 
+/**
+ * Character base class contains all the logic that players and NPC's potentially share
+ */
 public class Character : MonoBehaviour
 {
     [SerializeField]
@@ -17,7 +18,6 @@ public class Character : MonoBehaviour
     private List<ItemCountPair> _defaultItems = new List<ItemCountPair>();
     public List<ItemCountPair> DefaultItems {  get { return _defaultItems; } }
 
-    public StateId ActiveState { get; private set; }
     public EquipmentManager EquipmentManager { get; private set; }
     public StateMachine StateMachine { get; private set; }
     public Animator Animator { get; private set; }
@@ -42,6 +42,7 @@ public class Character : MonoBehaviour
         EquipmentManager = new EquipmentManager(AttachmentSlots);
         EquipmentManager.OnEquipmentChanged += OnEquippedHandler;
 
+        // Add the default items to the inventory 
         foreach (ItemCountPair itemCountPair in _defaultItems)
         {
             for (int i = 0; i < itemCountPair.count; i++)

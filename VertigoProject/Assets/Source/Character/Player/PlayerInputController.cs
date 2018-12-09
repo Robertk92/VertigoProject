@@ -1,7 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/**
+ * The PlayerInputController serves as an intermediate between input and the player
+ * This is handy if you want to control different characters or disable input all together
+ */
 public class PlayerInputController : MonoBehaviour
 {
     private Player _possessedPlayer;
@@ -18,6 +20,7 @@ public class PlayerInputController : MonoBehaviour
             return;
         }
         
+        // Pass input to the possessed player 
         if (Input.GetButtonDown(PlayerInputKeys.ActionEquip1))  { _possessedPlayer.OnInputActionPressed(PlayerInputKeys.ActionEquip1); }
         if (Input.GetButtonDown(PlayerInputKeys.ActionEquip2))  { _possessedPlayer.OnInputActionPressed(PlayerInputKeys.ActionEquip2); }
         if (Input.GetButtonDown(PlayerInputKeys.ActionEquip3))  { _possessedPlayer.OnInputActionPressed(PlayerInputKeys.ActionEquip3); }
@@ -26,7 +29,6 @@ public class PlayerInputController : MonoBehaviour
         if (Input.GetButtonDown(PlayerInputKeys.ActionShoot))   { _possessedPlayer.OnInputActionPressed(PlayerInputKeys.ActionShoot); }
         if (Input.GetButtonDown(PlayerInputKeys.ActionToggleFiringMode)) { _possessedPlayer.OnInputActionPressed(PlayerInputKeys.ActionToggleFiringMode); }
         if (Input.GetButtonDown(PlayerInputKeys.ActionThrow)) { _possessedPlayer.OnInputActionPressed(PlayerInputKeys.ActionThrow); }
-
         if (Input.GetButton(PlayerInputKeys.ActionShoot)) { _possessedPlayer.OnInputActionHold(PlayerInputKeys.ActionShoot); }
     }
 }

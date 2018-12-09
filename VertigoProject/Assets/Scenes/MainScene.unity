@@ -878,10 +878,10 @@ RectTransform:
   m_Father: {fileID: 1123395851}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 268.3}
-  m_SizeDelta: {x: 0, y: -536.6}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -117.20001}
+  m_SizeDelta: {x: 1032, y: 234.40002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1308335960
 MonoBehaviour:
@@ -895,7 +895,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5990566, g: 0.74290013, b: 1, a: 0.49803922}
+  m_Color: {r: 0.2783019, g: 0.5330191, b: 1, a: 0.7921569}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1641,7 +1641,7 @@ GameObject:
   - component: {fileID: 2086817168}
   - component: {fileID: 2086817167}
   m_Layer: 0
-  m_Name: Wall.R (1)
+  m_Name: Wall.T
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

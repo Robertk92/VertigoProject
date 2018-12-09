@@ -1,10 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Assertions;
 
+/**
+ * An data only (non-physical) item that is stored in memory
+ * This contains both the shared state (context) and the non-shared state (state info) of the item
+ */
 public class InventoryItem
 {
     public readonly ItemContext context;
@@ -17,6 +19,9 @@ public class InventoryItem
     }
 }
 
+/**
+ * Consists of an inventory with non-physical items and manages the equipped (physical) items
+ */
 public class EquipmentManager
 {
     private readonly Dictionary<AttachmentSlotId, Item> _equippedItems = new Dictionary<AttachmentSlotId, Item>();

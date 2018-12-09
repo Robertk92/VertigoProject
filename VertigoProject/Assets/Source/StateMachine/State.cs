@@ -1,13 +1,16 @@
 ﻿
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 public class MultiStateOptions
 {
     public bool canEquipItems;
 }
 
+/**
+ * Base class for every state
+ * Contains some variables and functions that are useful in most states
+ */
 public abstract class State
 {
     public Character Character { get; private set; }

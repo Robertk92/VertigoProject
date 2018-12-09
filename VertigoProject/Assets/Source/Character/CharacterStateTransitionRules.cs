@@ -9,6 +9,9 @@ public class CharacterStateTransitionRule
     public List<StateId> allowedStates;
 }
 
+/**
+ * The CharacterStateTransitionRules determine to what states the StateMachine can transition from a given other state
+ */
 [CreateAssetMenu]
 public class CharacterStateTransitionRules : ScriptableObject
 {

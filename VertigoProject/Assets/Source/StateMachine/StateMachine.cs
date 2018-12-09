@@ -1,9 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/**
+ * The StateMachine serves both as a logic seperator and an animation controller
+ * The activate state is used by the animator to determine what animation to play
+ * The states themselves contain gameplay logic that should run during said state
+ */
 public class StateMachine
 {
     public State ActiveState { get; private set; }
@@ -23,6 +27,12 @@ public class StateMachine
         _character = character;
     }
 
+    /// <summary>
+    /// Register a new state to the state machine, registered states can be activated
+    /// Only 1 state per type should be registered
+    /// </summary>
+    /// <typeparam name="T">The type of the state</typeparam>
+    /// <param name="stateId">The id of the state</param>
     public void RegisterState<T>(StateId stateId) where T : State, new()
     {
         Debug.AssertFormat(!_registeredStates.ContainsKey(stateId),
