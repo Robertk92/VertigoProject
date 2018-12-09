@@ -7,7 +7,6 @@ public class IdleState : State
     public override void Activate()
     {
         base.Activate();
-        Character.Animator.SetInteger("State", (int)Id);
     }
 
     public override void OnInputActionPressed(string action)

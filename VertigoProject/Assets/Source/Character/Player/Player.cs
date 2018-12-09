@@ -34,20 +34,4 @@ public class Player : Character
     {
         StateMachine.ActiveState.OnInputActionHold(actionName);
     }
-
-    // For debug purposes
-    private void OnGUI()
-    {
-        GUI.contentColor = Color.black;
-        GUILayout.Label("=====================");
-        GUILayout.Label("======Inventory======");
-        GUILayout.Label("=====================");
-        foreach (InventoryItem inventoryItem in EquipmentManager.Inventory)
-        {
-            GUILayout.Label(inventoryItem.context.name);
-        }
-        GUILayout.Label("=====================");
-
-        GUILayout.Label(string.Format("ActiveState: {0}", StateMachine.ActiveStateId));
-    }
 }

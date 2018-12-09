@@ -13,13 +13,7 @@ public class ThrowState : State
         MultiStateOptions.canEquipItems = false;
 
         _throwable = (Throwable)Character.EquipmentManager.GetEquipmentInSlot(AttachmentSlotId.RightHand);
-        if (_throwable == null)
-        {
-            StateMachine.TryActivateState(StateId.Idle);
-        }
 
-        Character.Animator.SetInteger("State", (int)Id);
-        
         Character.AnimationEventHandler.OnAnimEventReleaseThrowable += OnRelease;
         Character.AnimationEventHandler.OnAnimEventThrowEnded += OnThrowEnded;
     }

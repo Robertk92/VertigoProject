@@ -158,3 +158,6 @@ MonoBehaviour:
   - effectorEvent: 1
     effects:
     - {fileID: 11400000, guid: 63a9d23a28f536a4f8fdf8f91b3971ab, type: 2}
+  - effectorEvent: 1
+    effects:
+    - {fileID: 11400000, guid: bc716c5073f08024ab167a5c1328be7d, type: 2}

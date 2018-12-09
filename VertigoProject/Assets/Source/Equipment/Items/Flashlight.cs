@@ -52,6 +52,6 @@ public class Flashlight : Item
 
     private void RefreshLight()
     {
-        _light.enabled = StateInfo.IsLightOn;
+        _light.gameObject.SetActive(StateInfo.IsLightOn);
     }
 }

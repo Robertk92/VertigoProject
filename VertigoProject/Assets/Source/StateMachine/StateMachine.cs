@@ -9,10 +9,14 @@ public class StateMachine
     public State ActiveState { get; private set; }
     public StateId ActiveStateId { get { return ActiveState.Id; } }
 
-    private Character _character;
     private Dictionary<StateId, State> _registeredStates = new Dictionary<StateId, State>();
+    public IEnumerable<KeyValuePair<StateId, State>> RegisteredStates { get { return _registeredStates; } }
+
+    private Character _character;
     private StateId _defaultStateId;
-    
+
+    public event Action<StateId> OnStateChanged = delegate { };
+
     public StateMachine(Character character, StateId defaultStateId)
     {
         _defaultStateId = defaultStateId;
@@ -62,6 +66,7 @@ public class StateMachine
         
         ActiveState = _registeredStates[state];
         ActiveState.Activate();
+        OnStateChanged(state);
     }
 
     private bool CanTransitionTo(StateId state)

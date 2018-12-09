@@ -12,12 +12,7 @@ public class ReloadState : State
 
         Character.EquipmentManager.LockSlot(AttachmentSlotId.RightHand);
         _rangedWeapon = (RangedWeapon)Character.EquipmentManager.GetEquipmentInSlot(AttachmentSlotId.RightHand);
-        if(_rangedWeapon == null)
-        {
-            StateMachine.TryActivateState(StateId.Aim);
-            return;
-        }
-
+        
         InventoryItem nextAmmoClipInventoryItem = GetNextClipFromInventory();
         if(nextAmmoClipInventoryItem == null)
         {
@@ -34,10 +29,7 @@ public class ReloadState : State
             }
         }
 
-
-        Character.Animator.SetInteger("State", (int)Id);
-        float reloadTime = Character.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-        StartCoroutine(Reload(reloadTime));
+        StartCoroutine(Reload(_rangedWeapon.Context.ReloadTime));
     }
 
     public override void Deactivate()

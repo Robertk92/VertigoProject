@@ -11,14 +11,10 @@ public class AimState : State
     {
         base.Activate();
         _rangedWeapon = (RangedWeapon)Character.EquipmentManager.GetEquipmentInSlot(AttachmentSlotId.RightHand);
-        if (_rangedWeapon == null)
-        {
-            StateMachine.TryActivateState(StateId.Idle);
-        }
-        Character.Animator.SetInteger("State", (int)Id);
-        _canShoot = true;
+        _canShoot = false;
+        StartCoroutine(DelayNextShot(_rangedWeapon.Context.PostureDelay));
     }
-
+    
     public override void OnInputActionHold(string action)
     {
         base.OnInputActionHold(action);
@@ -29,7 +25,7 @@ public class AimState : State
             if (action == PlayerInputKeys.ActionShoot && _canShoot)
             {
                 StateMachine.TryActivateState(StateId.Shoot);
-                StartCoroutine(DelayNextShot(_rangedWeapon.Context.MinDelayBetweenShots));
+                StartCoroutine(DelayNextShot(_rangedWeapon.Context.DelayBetweenShots));
             }
         }
     }
@@ -44,7 +40,7 @@ public class AimState : State
             if (action == PlayerInputKeys.ActionShoot && _canShoot)
             {
                 StateMachine.TryActivateState(StateId.Shoot);
-                StartCoroutine(DelayNextShot(_rangedWeapon.Context.MinDelayBetweenShots));
+                StartCoroutine(DelayNextShot(_rangedWeapon.Context.DelayBetweenShots));
             }
         }
 
@@ -68,5 +64,4 @@ public class AimState : State
         yield return new WaitForSeconds(time);
         _canShoot = true;
     }
-
 }

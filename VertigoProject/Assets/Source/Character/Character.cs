@@ -40,7 +40,7 @@ public class Character : MonoBehaviour
         StateMachine.RegisterState<ThrowState>(StateId.Throw);
 
         EquipmentManager = new EquipmentManager(AttachmentSlots);
-        EquipmentManager.OnEquipped += OnEquippedHandler;
+        EquipmentManager.OnEquipmentChanged += OnEquippedHandler;
 
         foreach (ItemCountPair itemCountPair in _defaultItems)
         {
@@ -53,6 +53,11 @@ public class Character : MonoBehaviour
 
     private void OnEquippedHandler(ItemContext item)
     {
+        if(item == null)
+        {
+            return;
+        }
+
         if(item is RangedWeaponContext)
         {
             StateMachine.TryActivateState(StateId.Aim);
@@ -65,7 +70,7 @@ public class Character : MonoBehaviour
 
     protected virtual void Update()
     {
-        
+        Animator.SetInteger("State", (int)StateMachine.ActiveStateId);
     }
 
     

@@ -11,20 +11,23 @@ public class Game : MonoBehaviour
 
     [SerializeField]
     private Player _playerPrefab;
-    
+
+    public Player Player { get; private set; }
+    public PlayerInputController PlayerInputController { get; private set;}
+
     private void Awake()
     {
         Instance = this; // :)
 
-        PlayerInputController playerInputController = Instantiate(_playerInputControllerPrefab);
-        Player player = Instantiate(_playerPrefab);
+        PlayerInputController = Instantiate(_playerInputControllerPrefab);
+        Player = Instantiate(_playerPrefab);
 
         GameObject playerSpawn = GameObject.FindGameObjectWithTag("PlayerSpawn");
         Debug.AssertFormat(playerSpawn, "Failed to spawn player: No player spawn found in the scene");
 
-        player.transform.position = playerSpawn.transform.position;
-        player.transform.rotation = playerSpawn.transform.rotation;
+        Player.transform.position = playerSpawn.transform.position;
+        Player.transform.rotation = playerSpawn.transform.rotation;
 
-        playerInputController.Possess(player);
+        PlayerInputController.Possess(Player);
     }
 }

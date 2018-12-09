@@ -11,10 +11,6 @@ public class ShootState : State
         base.Activate();
 
         _rangedWeapon = (RangedWeapon)Character.EquipmentManager.GetEquipmentInSlot(AttachmentSlotId.RightHand);
-        if (_rangedWeapon == null)
-        {
-            StateMachine.TryActivateState(StateId.Idle);
-        }
 
         if (_rangedWeapon.StateInfo.AmmoClipStateInfo == null)
         {
@@ -30,7 +26,6 @@ public class ShootState : State
         }
 
         Character.EquipmentManager.LockSlot(AttachmentSlotId.RightHand);
-        Character.Animator.SetInteger("State", (int)Id);
         
         Shoot();
     }

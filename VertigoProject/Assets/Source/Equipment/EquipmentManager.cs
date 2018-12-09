@@ -35,8 +35,9 @@ public class EquipmentManager
     private readonly List<AttachmentSlot> _slots;
     private readonly Dictionary<AttachmentSlotId, bool> _slotLocks;
 
-    public event Action<ItemContext> OnEquipped = delegate { };
-    
+    public event Action<ItemContext> OnEquipmentChanged = delegate { };
+    public event Action OnInventoryChanged = delegate { };
+
     public EquipmentManager(List<AttachmentSlot> slots)
     {
         _slots = slots;
@@ -68,11 +69,13 @@ public class EquipmentManager
     public void AddToInventory(InventoryItem inventoryItem)
     {
         _inventory.Add(inventoryItem);
+        OnInventoryChanged();
     }
 
     public void RemoveFromInventory(InventoryItem inventoryItem)
     {
         _inventory.Remove(inventoryItem);
+        OnInventoryChanged();
     }
 
     public InventoryItem GetInventoryItemByName(string name)
@@ -94,6 +97,7 @@ public class EquipmentManager
         {
             _equippedItems[slotId] = null;
             equipped.transform.SetParent(null);
+            OnEquipmentChanged.Invoke(null);
         }
     }
 
@@ -145,7 +149,7 @@ public class EquipmentManager
         // Remove inventory item of equiped item
         RemoveFromInventory(inventoryItem);
 
-        OnEquipped.Invoke(inventoryItem.context);
+        OnEquipmentChanged.Invoke(inventoryItem.context);
         return spawnedItem;
     }
 }
