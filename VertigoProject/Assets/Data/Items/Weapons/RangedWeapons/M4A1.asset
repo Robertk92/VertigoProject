@@ -18,4 +18,5 @@ MonoBehaviour:
   _ammoClipContext: {fileID: 11400000, guid: 432f36e8de7112241b73e68f42b8f581, type: 2}
   _hasAutomaticFiringMode: 1
   _delayBetweenShots: 0.15
+  _postureDelay: 0.3
   _reloadTime: 2.5
